@@ -1,75 +1,68 @@
 #include "Parts.hpp"
 
-Parts::Parts(){
-	parts= {{{1,1},
-			 {1,1}},
-			 
-			{{0,0,0,0,0},
-			 {0,0,1,0,0},
-			 {0,0,1,1,0},
-			 {0,0,0,1,0},
-			 {0,0,0,0,0}},
-			 
-			{{0,0,0,0,0},
-			 {0,0,0,1,0},
-			 {0,0,1,1,0},
-			 {0,0,1,0,0},
-			 {0,0,0,0,0}},
-			 
-			{{0,0,0,0,0},
-			 {0,0,1,1,0},
-			 {0,0,1,0,0},
-			 {0,0,1,0,0},
-			 {0,0,0,0,0}},
-			 
-			{{0,0,0,0,0},
-			 {0,1,1,0,0},
-			 {0,0,1,0,0},
-			 {0,0,1,0,0},
-			 {0,0,0,0,0}},
-			 
-		    {{0,0,0,0,0},
-			 {0,0,1,0,0},
-			 {0,0,1,1,0},
-			 {0,0,1,0,0},
-			 {0,0,0,0,0}},
-			 
-			{{0,0,1,0},
-			 {0,0,1,0},
-			 {0,0,1,0},
-			 {0,0,1,0}}};
+Parts::Parts() {
+    parts = {
+        {{1, 1},
+         {1, 1}},
+
+        {{0, 0, 0, 0, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 1, 1, 0},
+         {0, 0, 0, 1, 0},
+         {0, 0, 0, 0, 0}},
+
+        {{0, 0, 0, 0, 0},
+         {0, 0, 0, 1, 0},
+         {0, 0, 1, 1, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 0, 0, 0}},
+
+        {{0, 0, 0, 0, 0},
+         {0, 0, 1, 1, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 0, 0, 0}},
+
+        {{0, 0, 0, 0, 0},
+         {0, 1, 1, 0, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 0, 0, 0}},
+
+        {{0, 0, 0, 0, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 1, 1, 0},
+         {0, 0, 1, 0, 0},
+         {0, 0, 0, 0, 0}},
+
+        {{0, 0, 1, 0},
+         {0, 0, 1, 0},
+         {0, 0, 1, 0},
+         {0, 0, 1, 0}}};
 }
 
-
-vector<vector<bool>> Parts::ConsultPart(int ind){
-	return parts[ind];
+std::vector<std::vector<bool>> Parts::ConsultPart(int index) {
+    return parts.at(index);
 }
 
+void Parts::RotatePart(int index) {
+    const auto original = parts[index];
+    const int size = static_cast<int>(parts[index].size());
 
-void Parts::RotatePart(int ind){
-	vector<vector<bool>> vAux=parts[ind];
-	int indI=0,indJ=0;
-	int sz=(int)parts[ind].size();
-	for(int i = 0; i < sz; i++){
-		for(int j = sz-1; j>=0; j--){
-			parts[ind][indI][indJ]=vAux[j][i];
-			indJ++;
-		}
-		indI++;
-		indJ=0;
-	}
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            parts[index][i][j] = original[size - 1 - j][i];
+        }
+    }
 }
 
-void Parts::DerotatePart(int ind){
-	vector<vector<bool>> vAux=parts[ind];
-	int indI=0,indJ=0;
-	int sz=(int)parts[ind].size();
-	for(int i = sz-1; i>=0; i--){
-		for(int j = 0; j < sz; j++){
-			parts[ind][indI][indJ]=vAux[j][i];
-			indJ++;
-		}
-		indI++;
-		indJ=0;
-	}
+void Parts::DerotatePart(int index) {
+    const auto original = parts[index];
+    const int size = static_cast<int>(parts[index].size());
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            parts[index][i][j] = original[j][size - 1 - i];
+        }
+    }
 }
