@@ -19,10 +19,13 @@ class Board : public Drawable {
         Color newPartColor;
         int indX, indY;
         int board[20][10];
+        int timer= 0;
+        int limitTimer=30;
         RectangleShape boardShapes[20][10];
     public:
     Board();
     bool InstallParts();
+    bool UpdateBoard();
     void UpdateBoardColors();
     virtual void draw(RenderTarget&, RenderStates) const;
 };
