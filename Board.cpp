@@ -1,6 +1,7 @@
 #include "Board.hpp"
 
 Board::Board() {
+    srand((unsigned)time(NULL));
     std::memset(board, 0, sizeof(board));
     for(int i = 0; i < 20; i++) {
         for(int j = 0; j < 10; j++) { // for aninado
@@ -14,7 +15,6 @@ Board::Board() {
 }
 
 bool Board::InstallParts() {
-    srand((unsigned)time(NULL));
     indNewPart = rand() % 7;
 
     vector<vector<bool>> Part = parts.ConsultPart(indNewPart);
@@ -102,11 +102,49 @@ void Board::UpdateBoardColors() {
                     boardShapes[i][j].setFillColor(Color(138, 194, 247));
                     break;
                     default:
-                    boardShapes[i][j].setFillColor(Color(newPartColor));
+                    boardShapes[i][j].setFillColor(newPartColor);
                     break;
             }
         }
     }
+}
+
+bool Board::UpdateBoard(){
+    if (++timer < limitTimer)
+        return false;
+    timer = 0;
+
+    int active = 0;
+    int movable = 0;
+    for(int i = 0; i < 20; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(board[i][j] == -1) {
+                active++;
+                if(i + 1 < 20 && board[i + 1][j] <= 0) movable++;
+            }
+        }
+    }
+
+    if(active == 0) return false;
+
+    if(active == movable) {
+        for(int i = 18; i >= 0; i--) {
+            for(int j = 0; j < 10; j++) {
+                if(board[i][j] == -1) {
+                    board[i][j] = 0;
+                    board[i + 1][j] = -1;
+                }
+            }
+        }
+        return false;
+    }
+
+    for(int i = 0; i < 20; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(board[i][j] == -1) board[i][j] = indColorNewPart;
+        }
+    }
+    return true;
 }
 
 void Board::draw(RenderTarget &rt, RenderStates rs) const {
