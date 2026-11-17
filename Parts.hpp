@@ -1,15 +1,15 @@
 #pragma once
-#include <iostream>
+
 #include <vector>
 
-using namespace std;
+class Parts {
+private:
+    std::vector<std::vector<std::vector<bool>>> parts;
 
-class Parts{
-    private:
-        vector<vector<vector<bool>>> parts;
-    public:
-        Parts();
-        vector<vector<bool>> ConsultPart(int ind);
-        void RotatePart(int ind);
-        void DerotatePart(int ind);
+public:
+    Parts();
+
+    std::vector<std::vector<bool>> ConsultPart(int index);
+    void RotatePart(int index);
+    void DerotatePart(int index);
 };
