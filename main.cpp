@@ -17,6 +17,8 @@ int main(){
                 window.close();
             }
         }
+        if(board.UpdateBoard() && !board.InstallParts())
+            window.close();
         board.UpdateBoardColors();
         window.clear(Color(20,20,20));
         window.draw(board);
