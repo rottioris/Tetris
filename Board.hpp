@@ -1,31 +1,39 @@
 #pragma once
-#include <iostream>
+
 #include <SFML/Graphics.hpp>
-#include <cstring>
-#include <ctime>
+
 #include "Parts.hpp"
 
+class Board : public sf::Drawable {
+private:
+    static constexpr int Rows = 20;
+    static constexpr int Cols = 10;
+    static constexpr int CellSize = 20;
 
-using namespace sf;
-using namespace std;
+    Parts parts;
 
-/* Board class */
+    int indNewPart = 0;
+    int indColorNewPart = 0;
+    sf::Color newPartColor;
+    int indX = 0;
+    int indY = 0;
+    int board[Rows][Cols];
+    int timer = 0;
+    int limitTimer = 30;
+    sf::RectangleShape boardShapes[Rows][Cols];
 
-class Board : public Drawable {
-    private:
-        Parts parts;
+    static sf::Color colorForCell(int value);
 
-        int indNewPart, indColorNewPart;
-        Color newPartColor;
-        int indX, indY;
-        int board[20][10];
-        int timer= 0;
-        int limitTimer=30;
-        RectangleShape boardShapes[20][10];
-    public:
+public:
     Board();
+
     bool InstallParts();
     bool UpdateBoard();
     void UpdateBoardColors();
-    virtual void draw(RenderTarget&, RenderStates) const;
+    void UpdateLimitTimer(int limit);
+    void Rigth();
+    void Left();
+    void RotatePart();
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
