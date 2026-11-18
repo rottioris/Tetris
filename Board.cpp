@@ -280,6 +280,35 @@ void Board::Left() {
     }
 }
 
+int Board::CheckLines() {
+    int lines = 0;
+
+    for (int i = Rows - 1; i >= 0; --i) {
+        bool full = true;
+        for (int j = 0; j < Cols; ++j) {
+            if (board[i][j] <= 0) {
+                full = false;
+                break;
+            }
+        }
+
+        if (full) {
+            for (int k = i; k > 0; --k) {
+                for (int j = 0; j < Cols; ++j) {
+                    board[k][j] = board[k - 1][j];
+                }
+            }
+            for (int j = 0; j < Cols; ++j) {
+                board[0][j] = 0;
+            }
+            ++lines;
+            ++i; // recheck the same row index after shifting down
+        }
+    }
+
+    return lines;
+}
+
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (int i = 0; i < Rows; ++i) {
         for (int j = 0; j < Cols; ++j) {
