@@ -34,6 +34,7 @@ public:
     void Rigth();
     void Left();
     void RotatePart();
+    int CheckLines();
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
