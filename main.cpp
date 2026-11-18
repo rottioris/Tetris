@@ -18,6 +18,7 @@ int main() {
     bool upPressed = false;
     bool rightPressed = false;
     bool leftPressed = false;
+    int score = 0;
 
     while (window.isOpen()) {
         sf::Event event{};
@@ -54,6 +55,11 @@ int main() {
         }
 
         board.UpdateBoardColors();
+        int newScore = board.CheckLines() * 5;
+        if (newScore > 0) {
+            score += newScore;
+            std::cout << score << std::endl;
+        }
         window.clear(sf::Color(20, 20, 20));
         window.draw(board);
         window.display();
